@@ -35,8 +35,8 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
   Stream<StoreState> _mapAddProductToState(AddProductToCart product) async* {
     _cart.add(product.product);
     _store.remove(product.product);
-    _store.sort((a, b) => a.title.compareTo(b.title));
-    _cart.sort((a, b) => a.title.compareTo(b.title));
+    _store.sort((a, b) => a.id.compareTo(b.id));
+    _cart.sort((a, b) => a.id.compareTo(b.id));
     yield AddedProductToCart();
     yield StoreInitial(store: _store, cart: _cart);
   }
@@ -45,8 +45,8 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       RemoveProductFromCart product) async* {
     _store.add(product.product);
     _cart.remove(product.product);
-    _store.sort((a, b) => a.title.compareTo(b.title));
-    _cart.sort((a, b) => a.title.compareTo(b.title));
+    _store.sort((a, b) => a.id.compareTo(b.id));
+    _cart.sort((a, b) => a.id.compareTo(b.id));
     yield RemovedProductFromCart();
     yield StoreInitial(store: _store, cart: _cart);
   }
@@ -54,7 +54,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
   Stream<StoreState> _mapClearCartToState(ClearCart clear) async* {
     _store = [..._store, ..._cart];
     _cart = [];
-    _store.sort((a, b) => a.title.compareTo(b.title));
+    _store.sort((a, b) => a.id.compareTo(b.id));
     yield RemovedProductFromCart();
     yield StoreInitial(store: _store, cart: _cart);
   }

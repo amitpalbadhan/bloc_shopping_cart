@@ -33,9 +33,7 @@ class StoreView extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Store(),
-      ),
+      body: Store(),
     );
   }
 }

@@ -9,50 +9,43 @@ class Store extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StoreBloc, StoreState>(
       builder: (context, state) {
-        return SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(25.0),
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Wrap(
-                  children: BlocProvider.of<StoreBloc>(context)
-                      .store
-                      .map((product) => Card(
-                            child: SizedBox(
-                              width: 300,
-                              height: 300,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.network(
-                                    product.image,
-                                    height: 150,
-                                    width: 150,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Text(product.title),
-                                  Text('\$${product.price}'),
-                                  Text(product.description),
-                                  TextButton(
-                                    onPressed: () {
-                                      BlocProvider.of<StoreBloc>(context).add(
-                                          AddProductToCart(product: product));
-                                    },
-                                    child: Text('Add To Cart'),
-                                  )
-                                ],
-                              ),
+        return GridView.count(
+          crossAxisCount: 4,
+          children: BlocProvider.of<StoreBloc>(context)
+              .store
+              .map((product) => Card(
+                    margin: EdgeInsets.all(32.0),
+                    child: SizedBox(
+                      width: 300,
+                      height: 300,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image.network(
+                              product.image,
+                              height: 150,
+                              width: 150,
+                              fit: BoxFit.cover,
                             ),
-                          ))
-                      .toList(),
-                ),
-              ],
-            ),
-          ),
+                            Text(product.title),
+                            Text('\$${product.price}'),
+                            Text(product.description),
+                            TextButton(
+                              onPressed: () {
+                                BlocProvider.of<StoreBloc>(context)
+                                    .add(AddProductToCart(product: product));
+                              },
+                              child: Text('Add To Cart'),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ))
+              .toList(),
         );
       },
     );
